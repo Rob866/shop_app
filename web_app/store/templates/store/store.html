@@ -2,43 +2,25 @@
 {% load static %}
 {% block content %}
 <div class="row">
-<div class="col-lg-4">
-<img class="thumbnail" src="{% static 'images/placeholder.png' %}">
-<div class="box-element product">
-  <h6><strong>Product</strong></h6>
-  <hr>
 
-  <button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
-  <a class="btn btn-outline-success" href="#">View</a>
-  <h4 style="display: inline-block; float: right"><strong>$20</strong></h4>
-
-</div>
-</div>
-
-<div class="col-lg-4">
-<img class="thumbnail" src="{% static 'images/placeholder.png' %}">
-<div class="box-element product">
-  <h6><strong>Product</strong></h6>
-  <hr>
-
-  <button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
-  <a class="btn btn-outline-success" href="#">View</a>
-  <h4 style="display: inline-block; float: right"><strong>$20</strong></h4>
-
-</div>
-</div>
-
-<div class="col-lg-4">
-<img class="thumbnail" src="{% static 'images/placeholder.png' %}">
-<div class="box-element product">
-  <h6><strong>Product</strong></h6>
-  <hr>
-
-  <button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
-  <a class="btn btn-outline-success" href="#">View</a>
-  <h4 style="display: inline-block; float: right"><strong>$20</strong></h4>
-
-</div>
-</div>
+{% for producto in productos  %}
+    <div class="col-lg-4">
+      {% if  producto.imagenes.all %}
+        {% with producto.imagenes.all|first as obj %}
+          <img  class="thumbnail" src="{{ obj.imagen.url }}">
+        {% endwith %}
+      {% else %}
+        <img class="thumbnail" src="{% static 'images/placeholder.png' %}">
+     {% endif %}
+      <div class="box-element product">
+       <h6><strong>{{producto.nombre}}</strong></h6>
+       <hr>
+       <button  class="btn btn-outline-secondary add-btn">Añadir al carro</button>
+       <a class="btn btn-outline-success" href="#">Ver</a>
+       <h4 style="display: inline-block; float: right"><strong>${{ producto.precio|floatformat:2}}</strong></h4>
+    </div>
+    </div>
+{% endfor %}
+   </div>
 </div>
 {% endblock %}
