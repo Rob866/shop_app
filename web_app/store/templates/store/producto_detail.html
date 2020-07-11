@@ -1,0 +1,140 @@
+{% extends "store/base.html" %}
+{% block tag_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<style>
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "montserrat",sans-serif;
+  box-sizing: border-box;
+}
+
+.gallery-section{
+  width: 100%;
+  padding: 60px 0;
+  background: #f1f1f1;
+}
+
+.inner-width{
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.gallery-section h1{
+  text-align: center;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.border{
+  width: 180px;
+  height: 4px;
+  background: #333;
+  margin: 60px auto;
+}
+
+.gallery-section .gallery{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.gallery-section .image{
+  flex: 0 0 25%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery-section .image img{
+  width: 100%;
+  height: 100%;
+  transition: 0.4s;
+}
+
+.gallery-section .image:hover img{
+  transform: scale(1.4) rotate(15deg);
+}
+
+@media screen and (max-width:960px) {
+  .gallery-section .image{
+    flex: 0 0 33.33%;
+  }
+}
+
+@media screen and (max-width:768px) {
+  .gallery-section .image{
+    flex: 0 0 50%;
+  }
+}
+
+@media screen and (max-width:480px) {
+  .gallery-section .image{
+    flex: 0 0 100%;
+  }
+}
+
+
+</style>
+{% endblock%}
+{% block content %}
+<div style="position: relative; width: 100%; height: 50px;padding-top:20px;">
+     <a  class="btn btn-outline-secondary add-btn"href="#">Añadir a Canasta</a>
+</div>
+
+  <h3 style="padding-top:20px;">Producto</h3>
+  <table class="table">
+    <tr>
+      <th>Nombre</th>
+      <td>{{ object.nombre }}</td>
+    </tr>
+    <tr>
+      <th>Precio</th>
+      <td>{{ object.precio }}</td>
+    </tr>
+    <tr>
+      <th>Descripcion</th>
+      <td>{{ object.descripcion|linebreaks }}</td>
+    </tr>
+    <tr>
+      <th>Tags</th>
+    <td>{{ object.tags.all|join:","|default:"No tags  disponibles" }}</td>
+    </tr>
+    <tr>
+     <th>En stock</th>
+     <td>{{ object.en_stock|yesno|capfirst }}</td>
+   </tr>
+   <tr>
+     <th>Ultima Actualizacion</th>
+     <td>{{ object.actualizacion|date:"F Y" }}</td>
+   </tr>
+ </table>
+
+  <h3 style="padding-top:20px;">Imagenes del producto:</h3>
+<div class="gallery-section">
+    <div class="inner-width">
+      <div class="gallery">
+        {% for imagen in object.imagenes.all %}
+          <a href="{{ imagen.imagen.url }}" class="image">
+            <img src="{{ imagen.imagen.url }}" alt="">
+          </a>
+        {% endfor%}
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+
+$(".gallery").magnificPopup({
+      delegate: 'a',
+      type: 'image',
+      gallery:{
+        enabled: true
+      }
+});
+
+</script>
+{% endblock content %}

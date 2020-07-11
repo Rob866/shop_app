@@ -19,7 +19,6 @@
 </div>
 </form>
 <div class="row">
-
 {% for producto in filter.qs %}
     <div class="col-lg-4">
       {% if  producto.imagenes.all %}
@@ -33,7 +32,7 @@
        <h6><strong>{{producto.nombre}}</strong></h6>
        <hr>
        <button  class="btn btn-outline-secondary add-btn">Añadir al carro</button>
-       <a class="btn btn-outline-success" href="#">Ver</a>
+       <a class="btn btn-outline-success" href="{% url 'store:producto_view' slug=producto.slug %}">Ver</a>
        <h4 style="display: inline-block; float: right"><strong>${{ producto.precio|floatformat:2}}</strong></h4>
     </div>
     </div>

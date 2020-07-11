@@ -1,9 +1,12 @@
 from . import  views
 from django.urls import path
-app_name= 'store'
+from .models import Producto
+from django.views.generic.detail import DetailView
 
+app_name= 'store'
 urlpatterns = [
     path('',views.ProductListView.as_view(),name='store'),
+    path("producto/<slug:slug>/",DetailView.as_view(model=Producto),name="producto_view",),
     path('cart/',views.cart,name='cart'),
     path('checkout/',views.checkout,name='checkout'),
 ]
