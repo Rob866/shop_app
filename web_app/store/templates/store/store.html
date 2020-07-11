@@ -1,9 +1,26 @@
 {% extends 'store/base.html' %}
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
+<form class="form-inline" style="padding: 10px;">
+   <!--{{ filter.form.nombre.label_tag }}-->
+   {% render_field filter.form.nombre class="form-control mr-sm-2"  placeholder='Buscar' %}
+    <button  style="margin:10px;"class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+<div class="form-group col-sm-8 col-md-6">
+          {{ filter.form.tags.label_tag }}
+          <div>
+            {% for choice in filter.form.tags %}
+              <label class="form-checkbox-inline">
+                {{choice.tag}} {{choice.choice_label}}
+              </label>
+            {% endfor %}
+          </div>
+</div>
+</form>
 <div class="row">
 
-{% for producto in productos  %}
+{% for producto in filter.qs %}
     <div class="col-lg-4">
       {% if  producto.imagenes.all %}
         {% with producto.imagenes.all|first as obj %}
@@ -21,6 +38,38 @@
     </div>
     </div>
 {% endfor %}
+<!--
    </div>
+   <nav>
+     <ul class="pagination">
+       {% if filter.has_previous %}
+         <li class="page-item">
+           <a
+             class="page-link"
+             href="?page={{filter.previous_page_number}}">Anterior</a>
+         </li>
+       {% else %}
+         <li class="page-item disabled">
+           <a class="page-link" href="#">Anterior</a>
+         </li>
+       {% endif %}
+       {% for pagenum in filter.paginator.page_range %}
+       <li
+          class="page-item{% if filter.number == pagenum %} active {% endif %}">
+         <a class="page-link" href="?page={{pagenum}}">{{pagenum}}</a>
+       </li>
+      {% endfor %}
+      {% if filter.has_next %}
+        <li class="page-item">
+         <a class="page-link" href="?page={{filter.next_page_number}}">Siguiente</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">Siguiente</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+
 </div>
 {% endblock %}

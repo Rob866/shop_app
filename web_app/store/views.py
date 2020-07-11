@@ -1,28 +1,23 @@
 from django.shortcuts import render
 from .models import  Producto
-# Create your views here.
+from django.views.generic.list import ListView
+from .filters import  ProductoFilter
 
+class ProductListView(ListView):
+    model = Producto
+    template_name= 'store/store.html'
+    paginate_by = 2
 
-def store(request):
-    productos = Producto.objects.all()
-    context = {'productos' : productos}
-    return render(request,'store/store.html',context)
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ProductoFilter(self.request.GET,queryset=self.get_queryset())
+        return context
 
 def cart(request):
     context = {}
     return render(request,'store/cart.html',context)
 
+
 def checkout(request):
     context = {}
     return render(request,'store/checkout.html',context)
-def home():
-    pass
-
-def contact():
-    pass
-
-def login():
-    pass
-
-def register():
-    pass
