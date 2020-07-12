@@ -2,25 +2,18 @@ from django.contrib import admin
 from store import models
 from django.utils.html import format_html
 
-class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('nombre','email',)
-    list_filter = ('nombre','email',)
-    search_fields = ('nombre','email')
-
 
 class OrderItemInline(admin.TabularInline):
     model= models.OrderItem
     extra=0
 
-
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('customer_nombre_','transaction_id','complete',)
+    list_display = ('transaction_id','complete',)
     list_filter = ('complete',)
-    search_fields = ('customer__nombre',)
+    search_fields = ('user__name',)
     inlines = [OrderItemInline,]
 
-    def customer_nombre_(self,instance):
-        return instance.customer.nombre
+
 
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = ('producto_nombre_','cantidad',)
@@ -31,10 +24,10 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 
 class ShippingAddressAdmin(admin.ModelAdmin):
-    list_display = ('customer_nombre_',)
-    search_fields = ('customer__nombre',)
+    list_display = ('user_nombre_',)
+    search_fields = ('user__nombre',)
 
-    def customer_nombre_(self,instance):
+    def user_nombre_(self,instance):
         return instance.customer.nombre
 
 
@@ -82,6 +75,5 @@ admin.site.register(models.ShippingAddress ,ShippingAddressAdmin)
 admin.site.register(models.Producto ,ProductoAdmin)
 admin.site.register(models.ProductoImagen,ProductoImagenAdmin)
 admin.site.register(models.ProductoTag,ProductoTagAdmin)
-admin.site.register(models.Customer,CustomerAdmin)
 admin.site.register(models.Order,OrderAdmin)
 admin.site.register(models.OrderItem,OrderItemAdmin)

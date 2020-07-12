@@ -53,20 +53,9 @@ class ProductoImagen(models.Model):
 
 
 
-class Customer(models.Model):
-	usuario = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-	nombre = models.CharField(max_length=200)
-	email = models.CharField(max_length=200)
-
-	def __str__(self):
-		return self.nombre
-
-
-
-
 class Order(models.Model):
     complete = models.BooleanField(default=False)
-    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True)
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     transaction_id = models.CharField(max_length=100,null=True)
 
@@ -75,6 +64,9 @@ class Order(models.Model):
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
         return total
+    @property
+    def is_empty(self):
+        return self.orderitem_set.all().count() == 0    
 
     def __str__(self):
         return str(self.id)
@@ -104,7 +96,7 @@ class ShippingAddress(models.Model):
     PAISES_SOPORTADOS = (
        ('mx','Mexico'),
        ('eu','EUA'))
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     direccion = models.CharField(max_length=200, null=False)
     ciudad = models.CharField(max_length=200, null=False)

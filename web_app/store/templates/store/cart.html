@@ -3,16 +3,19 @@
 {% block content %}
 <div class="row">
 <div class="col-lg-12">
+
+  {% if formset %}
+
   <div class="box-element">
 
-    <a  class="btn btn-outline-dark" href="{% url 'store:store' %}">&#x2190; Continue Shopping</a>
+    <a  class="btn btn-outline-dark" href="{% url 'store:store' %}">&#x2190;Continuar Comprando</a>
 
     <br>
     <br>
     <table class="table">
       <tr>
-        <th><h5>Items: <strong>3</strong></h5></th>
-        <th><h5>Total:<strong> $42</strong></h5></th>
+        <th><h5>Articulos Total: <strong>{{ request.order.get_cart_items  }}</strong></h5></th>
+        <th><h5>Precio Total:<strong>{{ request.order.get_cart_total}}</strong></h5></th>
         <th>
           <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'store:checkout' %}">Checkout</a>
         </th>
@@ -22,31 +25,59 @@
   </div>
 
   <br>
+  <form method="post">
+  {% csrf_token %}
+  {{formset.management_form}}
+  {% for form in formset  %}
   <div class="box-element">
     <div class="cart-row">
       <div style="flex:2"></div>
-      <div style="flex:2"><strong>Item</strong></div>
-      <div style="flex:1"><strong>Price</strong></div>
-      <div style="flex:1"><strong>Quantity</strong></div>
+      <div style="flex:2"><strong>Articulo</strong></div>
+      <div style="flex:1"><strong>Precio</strong></div>
+      <div style="flex:1"><strong>Cantidad</strong></div>
       <div style="flex:1"><strong>Total</strong></div>
     </div>
-
     <div class="cart-row">
-      <div style="flex:2"><img class="row-image" src="{% static 'images/placeholder.png' %}"></div>
-      <div style="flex:2"><p>Product 1</p></div>
-      <div style="flex:1"><p>$20</p></div>
+      {% if  form.instance.producto.imagenes.all %}
+        {% with form.instance.producto.imagenes.all|first as obj %}
+          <div style="flex:2"><img class="row-image" src="{{ obj.imagen.url }}"></div>
+        {% endwith %}
+      {% else %}
+        <div style="flex:2"><img class="row-image" src="{% static 'images/placeholder.png' %}"></div>
+     {% endif %}
+      <div style="flex:2"><p>{{ form.instance.producto.nombre }}</p></div>
+        <div style="flex:1"><p>{{ form.instance.producto.precio }}</p></div>
       <div style="flex:1">
-        <p class="quantity">2</p>
         <div class="quantity">
-          <img class="chg-quantity" src="{% static  'images/arrow-up.png' %}">
-
-          <img class="chg-quantity" src="{% static  'images/arrow-down.png' %}">
+         {{ form }}
         </div>
       </div>
-      <div style="flex:1"><p>$32</p></div>
+      <div style="flex:1"><p>{{ form.instance.get_total}}</p></div>
     </div>
+  {%endfor%}
+  </div>
+  <button  style="margin-top: 10px;" type="submit" class="btn btn-success">Actulizar la orden</button>
+</form>
+
+  {% else %}
+  <div class="box-element">
+
+    <a  class="btn btn-outline-dark" href="{% url 'store:store' %}">&#x2190; Continuar Comprando</a>
+
+    <br>
+    <br>
+    <table class="table">
+      <tr>
+        <th><h5>Items: <strong>0</strong></h5></th>
+        <th><h5>Total:<strong> $0</strong></h5></th>
+      </tr>
+    </table>
 
   </div>
+
+  <br>
+    <h3>Sin productos agregados</h3>
+  {% endif %}
 </div>
 </div>
 {% endblock %}
