@@ -35,6 +35,9 @@ def add_to_order(request):
         orderItem.save()
     return HttpResponseRedirect(reverse('store:producto_view',args=(producto.slug,)))
 
+
+
+
 def cart(request):
     if not request.order:
         return render(request,'store/cart.html',{ 'formset': None})
@@ -53,8 +56,14 @@ def cart(request):
     return render(request,'store/cart.html',{ 'formset': formset})
 
 
-
-
 def checkout(request):
     context = {}
     return render(request,'store/checkout.html',context)
+
+def login(request):
+    context = {}
+    return render(request,'store/login.html',context)
+
+def register(request):
+    context = {}
+    return render(request,'store/register.html',context)    

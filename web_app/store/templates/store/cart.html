@@ -17,7 +17,8 @@
         <th><h5>Articulos Total: <strong>{{ request.order.get_cart_items  }}</strong></h5></th>
         <th><h5>Precio Total:<strong>{{ request.order.get_cart_total}}</strong></h5></th>
         <th>
-          <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'store:checkout' %}">Checkout</a>
+          <a  style="float:right;padding:3px;" class="btn btn-success" href="{% url 'store:checkout' %}">
+          Checkout</a>
         </th>
       </tr>
     </table>
@@ -80,4 +81,36 @@
   {% endif %}
 </div>
 </div>
+<style media="screen">
+   input {
+     width: 78px;
+   }
+
+   @media (max-width: 470px) {
+  p {
+    font-size: 14px;
+   }
+   label{
+     font-size: 14px;
+     padding-left: 8px;
+   }
+   img {
+     width: 50px !important;
+   }
+   a {
+     font-size: 14px !important;
+   }
+   h5 {
+     font-size: 14px;
+   }
+}
+</style>
+</style>
 {% endblock %}
+<!--
+{% block js %}
+  {% if formset %}
+    {{ formset.media }}
+  {% endif %}
+{% endblock js %}
+-->

@@ -9,13 +9,12 @@
 
 <div class="form-group col-sm-8 col-md-6">
           {{ filter.form.tags.label_tag }}
-          <div>
             {% for choice in filter.form.tags %}
-              <label class="form-checkbox-inline">
+              <label class="form-checkbox-inline" style="padding:5px;">
                 {{choice.tag}} {{choice.choice_label}}
               </label>
             {% endfor %}
-          </div>
+
 </div>
 </form>
 <div class="row">
@@ -31,14 +30,15 @@
       <div class="box-element product">
        <h6><strong>{{producto.nombre}}</strong></h6>
        <hr>
-       <button  class="btn btn-outline-secondary add-btn">Añadir al carro</button>
+       <a class="btn btn-outline-secondary add-btn" href="{% url 'store:add_to_order'%}?product_id={{producto.id}}">Añadir al carro</a>
        <a class="btn btn-outline-success" href="{% url 'store:producto_view' slug=producto.slug %}">Ver</a>
        <h4 style="display: inline-block; float: right"><strong>${{ producto.precio|floatformat:2}}</strong></h4>
     </div>
     </div>
 {% endfor %}
+  </div>
 <!--
-   </div>
+
    <nav>
      <ul class="pagination">
        {% if filter.has_previous %}
@@ -70,5 +70,5 @@
     </ul>
   </nav>
 
-</div>
+</div>-->
 {% endblock %}

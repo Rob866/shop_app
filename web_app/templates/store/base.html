@@ -27,12 +27,13 @@
           <a class="nav-link" href="{% url 'store:store' %}">Store<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+        <a href="{% url 'store:login' %}" class="btn btn-warning">Login</a>
+        <!--<a class="nav-link" href="#">Link</a>-->
         </li>
 
       </ul>
       <div class="form-inline my-2 my-lg-0">
-       <a href="#"class="btn btn-warning">Login</a>
+        <a  style="margin-right: 5px;" href="{% url 'store:register' %}" class="btn btn-warning">Register</a>
 
         <a href="{% url 'store:cart' %}">
           <img  id="cart-icon" src="{% static 'images/cart.png' %}">
@@ -51,8 +52,5 @@
       {% endblock %}
 
     </div>
-
-
-
   </body>
 </html>

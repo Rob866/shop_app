@@ -66,7 +66,7 @@ class Order(models.Model):
         return total
     @property
     def is_empty(self):
-        return self.orderitem_set.all().count() == 0    
+        return self.orderitem_set.all().count() == 0
 
     def __str__(self):
         return str(self.id)
@@ -80,8 +80,8 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    producto = models.ForeignKey(Producto,on_delete=models.SET_NULL,null=True)
-    order = models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
+    producto = models.ForeignKey(Producto,on_delete=models.CASCADE,null=True)
+    order = models.ForeignKey(Order,on_delete=models.CASCADE,null=True)
     cantidad = models.PositiveIntegerField(default=1,validators=[MinValueValidator(1)])
     date_added = models.DateTimeField(auto_now_add=True)
 
