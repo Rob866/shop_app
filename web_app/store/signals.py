@@ -57,4 +57,4 @@ def cargar_ordenes_si_se_encontraron(sender,user,request,**kwargs):
             request.session['order_id'] = login_order.id
 
         except Order.DoesNotExist:
-            print("ACCESO SIN ORDEN PREBIA")
+            print("ACCESO SIN ORDEN CREADA")
