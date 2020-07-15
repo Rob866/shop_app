@@ -32,6 +32,7 @@ class Producto(models.Model):
 
 
     class Meta:
+        ordering=('nombre',)
         verbose_name_plural=('Productos')
 
     def __str__(self):
@@ -54,7 +55,10 @@ class ProductoImagen(models.Model):
 
 
 class Order(models.Model):
-    complete = models.BooleanField(default=False)
+    OPEN = 0
+    SUBMITTED = 1
+    STATUSES= ((OPEN, 'Abierto'),(SUBMITTED,'Completado'))
+    status =  models.IntegerField(choices=STATUSES, default=OPEN)
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     transaction_id = models.CharField(max_length=100,null=True)

@@ -8,8 +8,8 @@ class OrderItemInline(admin.TabularInline):
     extra=0
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('transaction_id','complete',)
-    list_filter = ('complete',)
+    list_display = ('transaction_id','status',)
+    list_filter = ('status',)
     search_fields = ('user__name',)
     inlines = [OrderItemInline,]
 
