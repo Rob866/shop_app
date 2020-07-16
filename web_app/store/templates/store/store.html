@@ -18,24 +18,30 @@
 </div>
 </form>
 <div class="row">
-{% for producto in filter.qs %}
-    <div class="col-lg-4">
-      {% if  producto.imagenes.all %}
-        {% with producto.imagenes.all|first as obj %}
-          <img  class="thumbnail" src="{{ obj.imagen.url }}">
-        {% endwith %}
-      {% else %}
-        <img class="thumbnail" src="{% static 'images/placeholder.png' %}">
-     {% endif %}
-      <div class="box-element product">
-       <h6><strong>{{producto.nombre}}</strong></h6>
-       <hr>
-       <a class="btn btn-outline-secondary add-btn" href="{% url 'store:add_to_order'%}?product_id={{producto.id}}">Añadir al carro</a>
-       <a class="btn btn-outline-success" href="{% url 'store:producto_view' slug=producto.slug %}">Ver</a>
-       <h4 style="display: inline-block; float: right"><strong>${{ producto.precio|floatformat:2}}</strong></h4>
+  {% if  filter.qs %}
+    {% for producto in filter.qs %}
+        <div class="col-lg-4">
+          {% if  producto.imagenes.all %}
+            {% with producto.imagenes.all|first as obj %}
+              <img  class="thumbnail" src="{{ obj.imagen.url }}">
+            {% endwith %}
+          {% else %}
+            <img class="thumbnail" src="{% static 'images/placeholder.png' %}">
+         {% endif %}
+          <div class="box-element product">
+           <h6><strong>{{producto.nombre}}</strong></h6>
+           <hr>
+           <a class="btn btn-outline-secondary add-btn" href="{% url 'store:add_to_order'%}?product_id={{producto.id}}">Añadir al carro</a>
+           <a class="btn btn-outline-success" href="{% url 'store:producto_view' slug=producto.slug %}">Ver</a>
+           <h4 style="display: inline-block; float: right"><strong>${{ producto.precio|floatformat:2}}</strong></h4>
+        </div>
+        </div>
+    {% endfor %}
+  {% else %}
+    <div class="col-lg-12">
+      <h3 style="text-align: center;">No hay Productos en el Sistema</h3>
     </div>
-    </div>
-{% endfor %}
+  {% endif %}
   </div>
 <!--
 
