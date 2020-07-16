@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import  MinValueValidator
 from django.contrib.auth.models import User
 from django.contrib import admin
-
+from django.conf import settings
 
 
 class ProductoTag(models.Model):
@@ -59,7 +59,7 @@ class Order(models.Model):
     SUBMITTED = 1
     STATUSES= ((OPEN, 'Abierto'),(SUBMITTED,'Completado'))
     status =  models.IntegerField(choices=STATUSES, default=OPEN)
-    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,null=True,blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     transaction_id = models.CharField(max_length=100,null=True)
 
@@ -100,7 +100,7 @@ class ShippingAddress(models.Model):
     PAISES_SOPORTADOS = (
        ('mx','Mexico'),
        ('eu','EUA'))
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     direccion = models.CharField(max_length=200, null=False)
     ciudad = models.CharField(max_length=200, null=False)
