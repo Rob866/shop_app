@@ -8,7 +8,7 @@ from django.shortcuts import (render,redirect)
 from .forms import OrderItemLineFormSet,LoginAutentificationForm,SignUpForm
 from django.contrib.auth import login,logout
 from django.views.generic.edit import FormView
-
+from django.contrib import  messages
 
 
 class Signup_view(FormView):
@@ -93,7 +93,11 @@ def add_to_order(request):
     if not created:
         orderItem.cantidad += 1
         orderItem.save()
-    return HttpResponseRedirect(reverse('store:producto_view',args=(producto.slug,)))
+    if producto:
+        messages.success(request, f'Se agrego: { producto.nombre } a tu canasta')
+
+    return HttpResponseRedirect(reverse('store:cart')) 
+    #HttpResponseRedirect(reverse('store:producto_view',args=(producto.slug,)))
 
 
 def cart(request):

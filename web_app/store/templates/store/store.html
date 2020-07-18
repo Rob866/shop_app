@@ -31,7 +31,8 @@
           <div class="box-element product">
            <h6><strong>{{producto.nombre}}</strong></h6>
            <hr>
-           <a class="btn btn-outline-secondary add-btn" href="{% url 'store:add_to_order'%}?product_id={{producto.id}}">Añadir al carro</a>
+           <a class="btn btn-outline-secondary add-btn"
+           href="{% url 'store:add_to_order'%}?product_id={{producto.id}}">Añadir al carro</a>
            <a class="btn btn-outline-success" href="{% url 'store:producto_view' slug=producto.slug %}">Ver</a>
            <h4 style="display: inline-block; float: right"><strong>${{ producto.precio|floatformat:2}}</strong></h4>
         </div>
