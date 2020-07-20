@@ -34,42 +34,111 @@
                 <div class="card">
                     <div class="card-header">Registro</div>
                     <div class="card-body">
-                        <form action="" method="">
-
+                        <form action="" method="post" novalidate>
+                        {% csrf_token %}
                           <div class="form-group row">
                               <label  class="col-md-4 col-form-label text-md-right">
-                                Username</label>
+                                {{ form.username.name}}</label>
                               <div class="col-md-6">
-                                  <input type="text"  class="form-control" name="username" required autofocus>
+                                <input
+                                    class ='form-control {% if form.username.errors %} is-invalid {% endif %}'
+                                    type="text"
+                                    name="username"
+                                    id='id_username'
+                                    value="{{ form.username.value|default:''}}">
+                                  {% if form.username.errors %}
+                                      <div class="invalid-feedback">
+                                        {{ form.username.errors}}
+                                      </div>
+                                  {%endif%}
                               </div>
                           </div>
                             <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                <label for="password1" class="col-md-4 col-form-label text-md-right">
+                                  Password</label>
                                 <div class="col-md-6">
-                                    <input type="password" id="password" class="form-control" name="password" required>
+                                  <input
+                                    class ='form-control {% if form.password1.errors %} is-invalid {% endif %}'
+                                    type="password"
+                                    name="password1"
+                                    id='id_password1'
+                                    value="{{ form.password1.value|default:''}}">
+                                    {% if form.password1.errors %}
+                                        <div class="invalid-feedback">
+                                          {{ form.password1.errors }}
+                                        </div>
+                                    {%endif%}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="password2" class="col-md-4 col-form-label text-md-right">
+                                Repite al password</label>
+                                <div class="col-md-6">
+                                  <input
+                                    class ='form-control {% if form.password2.errors %} is-invalid {% endif %}'
+                                    type="password"
+                                    name="password2"
+                                    id='id_password2'
+                                    value="{{ form.password2.value|default:''}}">
+                                    {% if form.password2.errors %}
+                                        <div class="invalid-feedback">
+                                          {{ form.password2.errors }}
+                                        </div>
+                                    {%endif%}
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right">
+                                {{ form.email.name}}</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="email_address" class="form-control" name="email-address" required autofocus>
+                                  <input
+                                    class ='form-control {% if form.email.errors %} is-invalid {% endif %}'
+                                    type="email"
+                                    name="email"
+                                    id='id_email'
+                                    value="{{ form.email.value|default:''}}">
+                                    {% if form.email.errors %}
+                                        <div class="invalid-feedback">
+                                          {{ form.email.errors }}
+                                        </div>
+                                    {%endif%}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">
-                                  Nombre</label>
+                                <label for="nombre" class="col-md-4 col-form-label text-md-right">
+                                  {{ form.nombre.name}}</label>
                                 <div class="col-md-6">
-                                    <input type="text"  class="form-control" name="Nombre" required autofocus>
-                                </div>
+                                    <input
+                                      class ='form-control {% if form.nombre.errors %} is-invalid {% endif %}'
+                                      type="text"
+                                      name="nombre"
+                                      id='nombre'
+                                      value="{{ form.nombre.value|default:''}}">
+                                      {% if form.nombre.errors %}
+                                          <div class="invalid-feedback">
+                                            {{ form.nombre.errors }}
+                                          </div>
+                                      {%endif%}
                             </div>
+                          </div>
                             <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">
-                                  Apellido</label>
+                                <label for="apellido" class="col-md-4 col-form-label text-md-right">
+                                  {{form.apellido.name}}</label>
                                 <div class="col-md-6">
-                                    <input type="text"  class="form-control" name="Apellido" required autofocus>
-                                </div>
+                                    <input
+                                      class ='form-control {% if form.apellido.errors %} is-invalid {% endif %}'
+                                      type="text"
+                                      name="apellido"
+                                      id='id_apellido'
+                                      value="{{ form.apellido.value|default:''}}">
+                                      {% if form.apellido.errors %}
+                                          <div class="invalid-feedback">
+                                            {{ form.apellido.errors }}
+                                          </div>
+                                      {%endif%}
                             </div>
+                          </div>
 
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">

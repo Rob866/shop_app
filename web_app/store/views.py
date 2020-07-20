@@ -1,15 +1,15 @@
 from django.shortcuts import (render,get_object_or_404)
-from .models import  (Producto,Order,OrderItem)
+from .models import  (Producto,Basket,BasketItem)
 from django.views.generic import   (ListView,RedirectView)
 from .filters import  ProductoFilter
 from django.http import  HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import (render,redirect)
-from .forms import OrderItemLineFormSet,LoginAutentificationForm,SignUpForm
+from .forms import BasketItemLineFormSet,LoginAutentificationForm,SignUpForm
 from django.contrib.auth import login,logout
 from django.views.generic.edit import FormView
 from django.contrib import  messages
-
+from django.contrib.auth import authenticate
 
 class Signup_view(FormView):
     template_name = "store/register.html"
@@ -32,9 +32,9 @@ class Signup_view(FormView):
         raw_password = form.cleaned_data.get("password1")
         email = form.cleaned_data.get("email")
         nombre = form.cleaned_data.get("nombre")
-        email = form.cleaned_data.get("apellido")
+        apellido = form.cleaned_data.get("apellido")
         user = authenticate(username=username,password=raw_password,email=email,nombre=nombre,
-        apellido= apellido )
+        apellido=apellido)
         if user is None:
             raise forms.ValidationError('error de autentificación')
         login(self.request, user)
@@ -77,42 +77,42 @@ class ProductListView(ListView):
         return context
 
 
-def add_to_order(request):
+def add_to_basket(request):
     producto = get_object_or_404(Producto,pk=request.GET.get('product_id'))
-    order = request.order
+    basket = request.basket
 
-    if not request.order:
+    if not request.basket:
         if request.user.is_authenticated:
             user = request.user
         else:
             user = None
-        order = Order.objects.create(user=user)
-        request.session['order_id'] = order.id
-    orderItem,created  = OrderItem.objects.get_or_create(order=order,producto=producto)
+        basket = Basket.objects.create(user=user)
+        request.session['basket_id'] = basket.id
+    basketItem,created  = BasketItem.objects.get_or_create(basket=basket,producto=producto)
 
     if not created:
-        orderItem.cantidad += 1
-        orderItem.save()
+        basketItem.cantidad += 1
+        basketItem.save()
     if producto:
         messages.success(request, f'Se agrego: { producto.nombre } a tu canasta')
 
-    return HttpResponseRedirect(reverse('store:cart')) 
+    return HttpResponseRedirect(reverse('store:cart'))
     #HttpResponseRedirect(reverse('store:producto_view',args=(producto.slug,)))
 
 
 def cart(request):
-    if not request.order:
+    if not request.basket:
         return render(request,'store/cart.html',{ 'formset': None})
 
     if request.method == 'POST':
-        formset = OrderItemLineFormSet(request.POST,instance=request.order)
+        formset = BasketItemLineFormSet(request.POST,instance=request.basket)
         if formset.is_valid():
             formset.save()
             return HttpResponseRedirect(reverse('store:cart'))
     else:
-        formset = OrderItemLineFormSet(instance=request.order)
+        formset = BasketItemLineFormSet(instance=request.basket)
 
-    if request.order.is_empty:
+    if request.basket.is_empty:
         return render(request,'store/cart.html',{ 'formset': None})
 
     return render(request,'store/cart.html',{ 'formset': formset})
@@ -121,7 +121,3 @@ def cart(request):
 def checkout(request):
     context = {}
     return render(request,'store/checkout.html',context)
-
-def register(request):
-    context = {}
-    return render(request,'store/register.html',context)

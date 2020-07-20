@@ -14,8 +14,8 @@
     <br>
     <table class="table">
       <tr>
-        <th><h5>Articulos Total: <strong>{{ request.order.get_cart_items  }}</strong></h5></th>
-        <th><h5>Precio Total:<strong>{{ request.order.get_cart_total}}</strong></h5></th>
+        <th><h5>Articulos Total: <strong>{{ request.basket.get_cart_items  }}</strong></h5></th>
+        <th><h5>Precio Total:<strong>{{ request.basket.get_cart_total}}</strong></h5></th>
         <th>
           <a  style="float:right;padding:3px;" class="btn btn-success" href="{% url 'store:checkout' %}">
           Checkout</a>

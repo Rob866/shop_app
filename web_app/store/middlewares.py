@@ -1,18 +1,18 @@
-from .models import Order
+from .models import Basket
 
-def order_middleware(get_response):
+def basket_middleware(get_response):
 
     def middleware(request):
-        if 'order_id' in request.session:
-            order_id = request.session['order_id']
+        if 'basket_id' in request.session:
+            basket_id = request.session['basket_id']
             try:
-                order = Order.objects.get(id=order_id)
-                request.order = order
-            except Order.DoesNotExist:
-                del request.session['order_id']
-                request.order = None
+                basket = Basket.objects.get(id=basket_id)
+                request.basket = basket
+            except Basket.DoesNotExist:
+                del request.session['basket_id']
+                request.basket = None
         else:
-            request.order = None
+            request.basket = None
         response = get_response(request)
         return response
     return middleware

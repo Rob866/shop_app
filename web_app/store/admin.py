@@ -3,19 +3,19 @@ from store import models
 from django.utils.html import format_html
 
 
-class OrderItemInline(admin.TabularInline):
-    model= models.OrderItem
+class BasketItemInline(admin.TabularInline):
+    model= models.BasketItem
     extra=0
 
-class OrderAdmin(admin.ModelAdmin):
+class BasketAdmin(admin.ModelAdmin):
     list_display = ('transaction_id','status',)
     list_filter = ('status',)
     search_fields = ('user__name',)
-    inlines = [OrderItemInline,]
+    inlines = [BasketItemInline,]
 
 
 
-class OrderItemAdmin(admin.ModelAdmin):
+class BasketItemAdmin(admin.ModelAdmin):
     list_display = ('producto_nombre_','cantidad',)
     list_filter = ('producto__nombre',)
 
@@ -23,7 +23,7 @@ class OrderItemAdmin(admin.ModelAdmin):
         return instance.producto.nombre
 
 
-class ShippingAddressAdmin(admin.ModelAdmin):
+class OrderAdmin(admin.ModelAdmin):
     list_display = ('user_nombre_',)
     search_fields = ('user__nombre',)
 
@@ -71,9 +71,9 @@ class ProductoTagAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("nombre",)}
     #autocomplete_fields = ('productos',)
 
-admin.site.register(models.ShippingAddress ,ShippingAddressAdmin)
+admin.site.register(models.Order ,OrderAdmin)
 admin.site.register(models.Producto ,ProductoAdmin)
 admin.site.register(models.ProductoImagen,ProductoImagenAdmin)
 admin.site.register(models.ProductoTag,ProductoTagAdmin)
-admin.site.register(models.Order,OrderAdmin)
-admin.site.register(models.OrderItem,OrderItemAdmin)
+admin.site.register(models.Basket,BasketAdmin)
+admin.site.register(models.BasketItem,BasketItemAdmin)

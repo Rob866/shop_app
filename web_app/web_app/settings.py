@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'store.middlewares.order_middleware'
+    'store.middlewares.basket_middleware'
 ]
 
 ROOT_URLCONF = 'web_app.urls'

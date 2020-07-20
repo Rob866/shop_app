@@ -1,5 +1,5 @@
 from  django.forms import inlineformset_factory
-from .models import  Order,OrderItem
+from .models import  Basket,BasketItem
 from django.contrib.auth import authenticate,get_user_model
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -34,8 +34,8 @@ class LoginAutentificationForm(forms.Form):
         return self.user
 
 
-OrderItemLineFormSet = inlineformset_factory(
- Order
-,OrderItem
+BasketItemLineFormSet = inlineformset_factory(
+ Basket
+,BasketItem
 ,fields=('cantidad',)
 ,extra=0,)

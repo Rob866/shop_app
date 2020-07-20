@@ -52,9 +52,7 @@ class ProductoImagen(models.Model):
         verbose_name = ('Imagen de Producto')
         verbose_name_plural=('Imagenes de Productos')
 
-
-
-class Order(models.Model):
+class Basket(models.Model):
     OPEN = 0
     SUBMITTED = 1
     STATUSES= ((OPEN, 'Abierto'),(SUBMITTED,'Completado'))
@@ -65,27 +63,27 @@ class Order(models.Model):
 
     @property
     def get_cart_total(self):
-        orderitems = self.orderitem_set.all()
-        total = sum([item.get_total for item in orderitems])
+        basketitems = self.basketitem_set.all()
+        total = sum([item.get_total for item in basketitems])
         return total
     @property
     def is_empty(self):
-        return self.orderitem_set.all().count() == 0
+        return self.basketitem_set.all().count() == 0
 
     def __str__(self):
         return str(self.id)
 
     @property
     def get_cart_items(self):
-        orderitems = self.orderitem_set.all()
-        total = sum([item.cantidad for item in orderitems])
+        basketitems = self.basketitem_set.all()
+        total = sum([item.cantidad for item in basketitems])
         return total
 
 
 
-class OrderItem(models.Model):
+class BasketItem(models.Model):
     producto = models.ForeignKey(Producto,on_delete=models.CASCADE,null=True)
-    order = models.ForeignKey(Order,on_delete=models.CASCADE,null=True)
+    basket = models.ForeignKey(Basket,on_delete=models.CASCADE,null=True)
     cantidad = models.PositiveIntegerField(default=1,validators=[MinValueValidator(1)])
     date_added = models.DateTimeField(auto_now_add=True)
 
@@ -96,12 +94,12 @@ class OrderItem(models.Model):
 
 
 
-class ShippingAddress(models.Model):
+class Order(models.Model):
     PAISES_SOPORTADOS = (
        ('mx','Mexico'),
        ('eu','EUA'))
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    #order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     direccion = models.CharField(max_length=200, null=False)
     ciudad = models.CharField(max_length=200, null=False)
     estado = models.CharField(max_length=200, null=False)
