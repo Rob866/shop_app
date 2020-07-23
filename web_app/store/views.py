@@ -1,5 +1,5 @@
 from django.shortcuts import (render,get_object_or_404)
-from .models import  (Producto,Basket,BasketItem)
+from .models import  (Producto,Basket,BasketItem,Direccion)
 from django.views.generic import   (ListView,RedirectView)
 from .filters import  ProductoFilter
 from django.http import  HttpResponseRedirect
@@ -10,6 +10,20 @@ from django.contrib.auth import login,logout
 from django.views.generic.edit import FormView
 from django.contrib import  messages
 from django.contrib.auth import authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
+class DireccionListView(LoginRequiredMixin,ListView):
+    model = Direccion
+    template_name = "store/direccion_list.html"
+    context_object_name = 'direcciones'
+
+    def get_queryset(self):
+        queryset = super(DireccionListView,self).get_queryset()
+        return queryset.filter(customer=self.request.user)
+
+
 
 class Signup_view(FormView):
     template_name = "store/register.html"

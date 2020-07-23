@@ -23,11 +23,11 @@ class BasketItemAdmin(admin.ModelAdmin):
         return instance.producto.nombre
 
 
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user_nombre_',)
-    search_fields = ('user__nombre',)
+class DireccionAdmin(admin.ModelAdmin):
+    list_display = ('customer_nombre_',)
+    search_fields = ('customer__nombre',)
 
-    def user_nombre_(self,instance):
+    def customer_nombre_(self,instance):
         return instance.customer.nombre
 
 
@@ -71,7 +71,7 @@ class ProductoTagAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("nombre",)}
     #autocomplete_fields = ('productos',)
 
-admin.site.register(models.Order ,OrderAdmin)
+admin.site.register(models.Direccion ,DireccionAdmin)
 admin.site.register(models.Producto ,ProductoAdmin)
 admin.site.register(models.ProductoImagen,ProductoImagenAdmin)
 admin.site.register(models.ProductoTag,ProductoTagAdmin)

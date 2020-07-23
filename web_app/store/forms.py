@@ -1,5 +1,5 @@
 from  django.forms import inlineformset_factory
-from .models import  Basket,BasketItem
+from .models import  Basket,BasketItem,Direccion
 from django.contrib.auth import authenticate,get_user_model
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -39,3 +39,12 @@ BasketItemLineFormSet = inlineformset_factory(
 ,BasketItem
 ,fields=('cantidad',)
 ,extra=0,)
+
+
+class UpdateViewForm(forms.ModelForm):
+    PAISES_SOPORTADOS = (('mx','Mexico'),('eu','EUA'))
+    pais = forms.ChoiceField(choices=PAISES_SOPORTADOS,widget=forms.Select(attrs={'class':'form-control'}))
+
+    class Meta:
+        model = Direccion
+        fields =('direccion1', 'direccion2','zip_code','estado','ciudad','pais')

@@ -74,6 +74,7 @@ TEMPLATES = [
 
 
 AUTH_USER_MODEL = "usuario.Usuario"
+LOGIN_URL= '/login/'
 
 WSGI_APPLICATION = 'web_app.wsgi.application'
 

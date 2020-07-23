@@ -94,19 +94,23 @@ class BasketItem(models.Model):
 
 
 
-class Order(models.Model):
+class Direccion(models.Model):
     PAISES_SOPORTADOS = (
        ('mx','Mexico'),
        ('eu','EUA'))
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
     #order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    direccion = models.CharField(max_length=200, null=False)
-    ciudad = models.CharField(max_length=200, null=False)
-    estado = models.CharField(max_length=200, null=False)
-    zipcode = models.CharField('Codigo postal',max_length=200, null=False)
+    direccion1 = models.CharField('Dirección 1', max_length=100)
+    direccion2 = models.CharField('Direccion 2', max_length=100,blank=True)
+    ciudad = models.CharField(max_length=200)
+    estado = models.CharField(max_length=200)
+    zip_code = models.CharField('Codigo postal',max_length=200)
     pais = models.CharField(max_length=3,choices=PAISES_SOPORTADOS)
     date_added = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name_plural = ('Direcciones')
+
 
     def __str__(self):
-        return self.direccion
+        return f"{self.customer}, {self.ciudad}"
