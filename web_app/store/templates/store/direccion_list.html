@@ -2,19 +2,17 @@
 {% block  content %}
 
 <p>
-  <span class="btn btn-warning">
-      <a  style="color: white; font-size: 15px;" href="">Agregar Dirección</a>
-  </span>
+      <a class="btn btn-warning">Agregar Dirección</a>
 </p>
 {% if   direcciones %}
     {% for direccion in  direcciones %}
       <div class="list-group">
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ direccion.direccion1}}</h5>
+          <div class="width:100%">
+            <h5 class="mb-2">{{ direccion.direccion1}}</h5>
             <div>
-                <button type="button" name="button">Actualizar</button>
-                <button type="button" name="button"  style="width:86px">Borrar</button>
+                <a class="btn btn-info" href="{% url 'store:direccion_update' pk=direccion.id %}">Actualizar</a>
+                <button  class="btn btn-danger" type="button" name="button"  style="width:86px">Borrar</button>
             </div>
 
           </div>

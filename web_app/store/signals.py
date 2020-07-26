@@ -26,7 +26,6 @@ def generar_thumbnail(sender,instance,**kwargs):
 
     temp_thumb.close()
 #mejorar Codigo
-#apesta
 @receiver(user_logged_in)
 def cargar_basket_si_se_encontro(sender,user,request,**kwargs):
     basket_anonima = getattr(request,"basket",None)

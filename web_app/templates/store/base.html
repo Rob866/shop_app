@@ -20,40 +20,42 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Web Data</a>
+    <a class="navbar-brand" href="{% url 'store:store' %}">Tienda<span class="sr-only">(current)</span></a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'store:store' %}">Store<span class="sr-only">(current)</span></a>
-        </li>
+
         {% if request.user.is_authenticated %}
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'store:direcciones' %}">Direcciones<span class="sr-only">(current)</span></a>
         </li>
-
+        <li class="nav-item">
+        <a href="{% url 'store:logout' %}" class="btn btn-warning">Logout</a>
+        </li>
         {% else %}
-          <li class="nav-item">
+          <li class="nav-item" style="padding:2px;">
           <a href="{% url 'store:login' %}" class="btn btn-warning">Login</a>
+          </li>
+          <li class="nav-item" style="padding:2px;">
+          <a href="{% url 'store:register' %}" class="btn btn-warning">Register</a>
           </li>
         {% endif%}
 
       </ul>
       <div class="form-inline my-2 my-lg-0">
-          {% if request.user.is_authenticated %}
-                <a href="{% url 'store:logout' %}" class="btn btn-warning">Logout</a>
-            {%else%}
-            <a  style="margin-right: 5px;" href="{% url 'store:register' %}" class="btn btn-warning">Register</a>
-          {% endif%}
+
         <a href="{% url 'store:cart' %}">
           <img  id="cart-icon" src="{% static 'images/cart.png' %}">
         </a>
+
          {% if request.basket %}
-           <p id="cart-total">{{ request.basket.get_cart_items}}</p>
-          {% else %}
-           <p id="cart-total">0</p>
+             <p id="cart-total">{{ request.basket.get_cart_items}}</p>
+         {% else %}
+             <p id="cart-total">0</p>
          {%endif%}
        </div>
   </nav>

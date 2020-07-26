@@ -1,11 +1,11 @@
 from django.shortcuts import (render,get_object_or_404)
 from .models import  (Producto,Basket,BasketItem,Direccion)
-from django.views.generic import   (ListView,RedirectView)
+from django.views.generic import   (ListView,RedirectView,UpdateView)
 from .filters import  ProductoFilter
 from django.http import  HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import (render,redirect)
-from .forms import BasketItemLineFormSet,LoginAutentificationForm,SignUpForm
+from .forms import BasketItemLineFormSet,LoginAutentificationForm,SignUpForm,UpdateViewForm
 from django.contrib.auth import login,logout
 from django.views.generic.edit import FormView
 from django.contrib import  messages
@@ -22,6 +22,19 @@ class DireccionListView(LoginRequiredMixin,ListView):
     def get_queryset(self):
         queryset = super(DireccionListView,self).get_queryset()
         return queryset.filter(customer=self.request.user)
+
+
+class DireccionUpdateView(LoginRequiredMixin,UpdateView):
+    template_name = "store/direccion_update.html"
+    model = Direccion
+    form_class = UpdateViewForm
+
+    success_url = reverse_lazy("store:direcciones")
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(customer= self.request.user)
+
 
 
 

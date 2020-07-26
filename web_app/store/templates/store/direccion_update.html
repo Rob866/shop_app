@@ -1,0 +1,83 @@
+{% extends "store/base.html" %}
+{% block  content %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{ form.direccion1.label_tag}}
+       <input
+          class ='form-control {% if form.direccion1.errors %} is-invalid {% endif %}'
+          type="text"
+          name="direccion1"
+         id='id_direccion1'
+          value="{{ form.direccion1.value|default:''}}">
+
+    </div>
+    {% if form.direccion1.errors %}
+        <div class="invalid-feedback">
+          {{ form.direccion1.errors}}
+        </div>
+    {%endif%}
+    <div class="form-group">
+      {{ form.direccion2.label_tag}}
+       <input
+          class ='form-control {% if form.direccion2.errors %} is-invalid {% endif %}'
+          type="text"
+          name="direccion2"
+         id='id_direccion2'
+          value="{{ form.direccion2.value|default:''}}">
+
+    </div>
+    <div class="form-group">
+      {{ form.zip_code.label_tag}}
+       <input
+          class ='form-control {% if form.zip_code.errors %} is-invalid {% endif %}'
+          type="text"
+          name="zip_code"
+         id='id_zip_code'
+          value="{{ form.zip_code.value|default:''}}">
+          {% if form.zip_code.errors %}
+              <div class="invalid-feedback">
+                {{ form.zip_code.errors}}
+              </div>
+          {%endif%}
+    </div>
+
+    <div class="form-group">
+      {{ form.ciudad.label_tag}}
+       <input
+          class ='form-control {% if form.ciudad.errors %} is-invalid {% endif %}'
+          type="text"
+          name="ciudad"
+         id='id_ciudad'
+          value="{{ form.ciudad.value|default:''}}">
+      {% if form.ciudad.errors %}
+      <div class="invalid-feedback">
+        {{ form.ciudad.errors}}
+      </div>
+      {%endif%}
+    </div>
+    <div class="form-group">
+      {{ form.estado.label_tag}}
+       <input
+          class ='form-control {% if form.estado.errors %} is-invalid {% endif %}'
+          type="text"
+          name="estado"
+         id='id_estado'
+          value="{{ form.estado.value|default:''}}">
+      {% if form.estado.errors %}
+      <div class="invalid-feedback">
+        {{ form.estado.errors}}
+      </div>
+      {%endif%}
+    </div>
+      {{ form.pais.label_tag}}
+      {{ form.pais}}
+
+    <button type="submit" class="btn btn-primary mt-3">Guardar cambios</button>
+  </form>
+
+
+
+
+{% endblock %}
